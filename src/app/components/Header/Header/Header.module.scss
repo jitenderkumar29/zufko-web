@@ -4,7 +4,7 @@
 .header {
   // background-color: $primary-color;
   // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 1rem;
+  padding: 0.15rem 2rem;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -14,6 +14,7 @@
   // background: linear-gradient(to top, #f7a9c5, #f66fa1d9);
   // background: linear-gradient(to top, #FBF8FF, $primary-color);
   color: $white;
+
 
   &Container {
     display: flex;

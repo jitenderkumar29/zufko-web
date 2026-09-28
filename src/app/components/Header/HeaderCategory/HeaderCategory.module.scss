@@ -4,7 +4,7 @@
   background-color: $secondary-color;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid $border-color;
-  padding: 0.25rem 0;
+  padding: 0.15rem 0;
   // position: fixed;
   z-index: 100;
   width: 100%;
@@ -23,7 +23,7 @@
 .categoryTabs {
   display: flex;
   gap: 0.5rem;
-  padding: 0.5rem 0;
+  padding: 0.15rem 0;
   justify-content: space-between;
 }
 
