@@ -1,0 +1,150 @@
+@use "../../../styles/variables" as *;
+
+.headerCategory {
+  background-color: $secondary-color;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid $border-color;
+  padding: 0.25rem 0;
+  // position: fixed;
+  z-index: 100;
+  width: 100%;
+}
+
+.container {
+  padding: 0 2rem;
+  margin: 0 auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.categoryTabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  justify-content: space-between;
+}
+
+.categoryTab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: $black;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid $white;
+  border-radius: 50px;
+  background-color: $white;
+
+  // Ensure FA icons always follow the button color
+  svg {
+    fill: currentColor;
+    color: inherit;
+  }
+
+  &:hover {
+    background-color: $secondary-color;
+    color: $white;
+  }
+
+  &.active {
+    color: $white;
+    background-color: $primary-color;
+  }
+
+  span {
+    font-size: 18px;
+  }
+}
+
+.icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 10px;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.tabContainer {
+  margin-top: -1px;
+}
+
+.allCategory {
+  margin-top: 4.5rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .categoryTab {
+    min-width: 60px;
+    font-size: 0.7rem;
+    padding: 0.25rem;
+  }
+
+  .icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categoryTabs {
+    gap: 0.25rem;
+  }
+
+  .categoryTab {
+    min-width: 50px;
+    font-size: 0.6rem;
+
+    span {
+      display: none;
+    }
+  }
+
+  .icon {
+    font-size: 1.15rem;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-right: 0;
+  }
+}
+
+.categoryPage {
+  // margin-top: 4.5rem;
+  // padding: 1.5rem 2rem;
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #555;
+  }
+}
+
+.categoryPageTemp {
+  margin-top: 0.5rem;
+  padding: 1.5rem 2rem;
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #555;
+  }
+}

@@ -1,0 +1,757 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.header {
+  // background-color: $primary-color;
+  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: $primary-color;
+  // background: linear-gradient(to top, #f5dde6, #f6c2d5);
+  // background: linear-gradient(to top, #f6cedd, #f6aec8);
+  // background: linear-gradient(to top, #f7a9c5, #f66fa1d9);
+  // background: linear-gradient(to top, #FBF8FF, $primary-color);
+  color: $white;
+
+  &Container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1500px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .leftSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo {
+    // color: $white;
+    color: $primary-color;
+    // color: #950EDB ;
+    // color: #00b5b7;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0;
+    // width: 120px;
+    width: 180px;
+    height: auto;
+  }
+
+  .locationContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    // gap: 0.3rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 5px;
+
+    &:hover {
+      opacity: 0.8;
+      background-color: #f7f7f703;
+    }
+
+    .deliveryTime{
+      font-size: 20px;
+      font-weight: bold;
+      margin-left: 25px;
+      color: $white;
+      // color: $black;
+    }
+    .deliveryLocation{
+      display: flex;
+    }
+  }
+
+  .locationIcon {
+    // color: $primary-color;
+    // color: #950EDB;
+    color: $white;
+    font-size: 18px;
+    margin-top: 1px;
+    margin-right: 5px;
+  }
+
+  .locationText {
+    font-size: 15px;
+    color: $white;
+    // color: #333;
+    display: flex;
+    align-items: center;
+    // gap: 0.2rem;
+  }
+
+  .dropdownIcon {
+    color: $white;
+    // color: #666;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .searchContainer {
+    flex: 1;
+    max-width: 700px;
+    margin: 0 1rem;
+  }
+
+  .searchForm {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.searchInput {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 1rem;
+  padding-right: 2.5rem;
+  border: 2px solid $primary-color;
+  border-radius: 2rem;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  background: $white;
+  // background: transparent;
+  color: $black;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 1px $primary-color;
+  }
+}
+
+.animatedPlaceholderFix {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  // color: $white;
+  color: $black;
+  pointer-events: none;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+.animatedPlaceholder {
+  position: absolute;
+  top: 50%;
+  left: 7rem;
+  transform: translateY(-50%);
+    // color: $white;
+  color: $black;
+  pointer-events: none;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.fadeIn {
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+.fadeOut {
+  animation: slideOut 0.6s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(0px) translateX(0);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(-50%) translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(-50%) translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-40px) translateX(0);
+    opacity: 0;
+  }
+}
+
+  .searchButton {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    // color: $white;
+    color: $primary-color;
+    padding: 0.3rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $primary-color-dark;
+      // color: #00b5b7;
+    }
+  }
+
+  .searchIcon {
+    font-size: 1.25rem;
+  }
+
+  .rightSection {
+    display: flex;
+    align-items: center;
+  }
+
+  .actionButtons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .actionButton {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: $white;
+    // color: #333;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.3rem;
+    transition: all 0.2s ease;
+    position: relative;
+    font-size: 18px;
+
+    &:hover {
+      background-color: #f0f0f025;
+    }
+
+    // &::after {
+    //   content: '';
+    //   position: absolute;
+    //   right: -0.25rem;
+    //   top: 50%;
+    //   transform: translateY(-50%);
+    //   height: 60%;
+    //   width: 1px;
+    //   background-color: #e0e0e0;
+    // }
+
+    &:last-child::after {
+      display: none;
+    }
+  }
+
+  .lang{
+    display: flex;
+  }
+
+  .langIcon{
+    margin-top: 4px;
+  }
+
+  .actionIcon {
+    font-size: 0.9rem;
+    color: $white;
+    // color: #666;
+  }
+
+  .cartButton {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: $green; // Blinkit green
+  border: none;
+  border-radius: 0.6rem;
+  color: white;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $green-dark;
+  }
+
+  .cartIcon {
+    font-size: 40px !important;
+    color: white;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease; /* Smooth transition for the rotation */
+  }
+
+  .cartIcon:hover {
+    animation: rotateCart 0.6s ease-in-out; /* Animation on hover */
+}
+
+@keyframes rotateCart {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-30deg); /* Rotate left */
+    }
+    75% {
+        transform: rotate(30deg); /* Rotate right */
+    }
+    100% {
+        transform: rotate(0deg); /* Return to original position */
+    }
+}
+
+  .cartDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.1;
+  }
+
+  .cartItems,
+  .cartPrice {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+  }
+
+  // Hide original badge
+  .cartBadge {
+    display: none;
+  }
+}
+
+
+  .loginButton {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: $white;
+    // color: #333;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.3rem;
+    transition: all 0.2s ease;
+    font-size: 18px;
+
+
+    &:hover {
+      background-color: #f0f0f025;
+      // background-color: #f0f0f0;
+    }
+
+      .loginImage{
+       margin-right: 5px;
+      }
+  }
+
+  .userIcon {
+    font-size: 1rem;
+    color: #666;
+  }
+
+  /* Location Modal Styles */
+  .locationModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+  }
+
+  .modalContent {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .detectLocationButton {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #00b5b7;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 1rem 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #009a9c;
+    }
+  }
+
+  .orDivider {
+    text-align: center;
+    margin: 1rem 0;
+    color: #666;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 45%;
+      height: 1px;
+      background-color: #e0e0e0;
+    }
+
+    &::before {
+      left: 0;
+    }
+
+    &::after {
+      right: 0;
+    }
+  }
+
+  .locationSearch {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+
+    &:focus {
+      outline: none;
+      border-color: #00b5b7;
+    }
+  }
+
+  .closeModal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    padding: 0.2rem;
+
+    &:hover {
+      color: #333;
+    }
+  }
+
+  // Responsive styles
+  @media (max-width: 992px) {
+    .searchContainer {
+      order: 3;
+      width: 100%;
+      max-width: 100%;
+      margin: 0.5rem 0;
+    }
+
+    .actionButton {
+      span {
+        display: none;
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .cartText {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    &Container {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .leftSection {
+      order: 1;
+      width: auto;
+    }
+
+    .rightSection {
+      order: 2;
+      margin-left: auto;
+    }
+
+    .locationText {
+      max-width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .actionButtons {
+      gap: 0.3rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 0.8rem;
+
+    .logo {
+      font-size: 1.3rem;
+    }
+
+    .locationText {
+      max-width: 120px;
+    }
+
+    .actionButton,
+    .loginButton,
+    .cartButton {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.4rem;
+    }
+
+    .actionIcon,
+    .userIcon,
+    .cartIcon {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.locationContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .deliveryTime {
+    font-size: 10px;
+    font-weight: 600;
+    color: $white;
+    letter-spacing: 0.5px;
+    // text-transform: uppercase;
+  }
+
+  .deliveryLocation {
+    display: flex;
+    align-items: center;
+    // gap: 6px;
+    margin-top: 2px;
+
+    .locationIcon {
+      color: $white;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .locationText {
+      font-size: 13px;
+      font-weight: 500;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      max-width: 220px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @media (max-width: 768px) {
+        max-width: 140px;
+        font-size: 12px;
+      }
+
+      @media (max-width: 480px) {
+        max-width: 100px;
+        font-size: 11px;
+      }
+    }
+
+    .dropdownIcon {
+      font-size: 12px;
+      color: #666;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .locationContainer {
+    margin-left: 8px;
+    
+    .deliveryTime {
+      font-size: 8px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .locationContainer {
+    margin-left: 4px;
+    padding: 2px 4px;
+    
+    .deliveryTime {
+      font-size: 7px;
+    }
+  }
+}
+
+// components/Header/Header.module.scss - Add these styles to your existing file
+
+.locationContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  &.locationMissing {
+    .deliveryTime {
+      color: $white;
+    }
+
+    .locationIcon {
+      color: $white;
+    }
+
+    .locationText {
+      color: $white;
+      font-weight: 600;
+    }
+  }
+
+  .deliveryTime {
+    font-size: 10px;
+    font-weight: 600;
+    color: $white;
+    letter-spacing: 0.5px;
+  }
+
+  .deliveryLocation {
+    display: flex;
+    align-items: center;
+    // gap: 6px;
+    margin-top: 2px;
+
+    .locationIcon {
+      color: $white;
+      font-size: 18px;
+      flex-shrink: 0;
+
+      &.missingIcon {
+        animation: pulse 2s ease-in-out infinite;
+      }
+    }
+
+    .locationText {
+      font-size: 13px;
+      font-weight: 500;
+      color: $white;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      max-width: 220px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @media (max-width: 768px) {
+        max-width: 140px;
+        font-size: 12px;
+      }
+
+      @media (max-width: 480px) {
+        max-width: 100px;
+        font-size: 11px;
+      }
+    }
+
+    .dropdownIcon {
+      font-size: 12px;
+      color: $white;
+      flex-shrink: 0;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .locationContainer {
+    margin-left: 8px;
+    
+    .deliveryTime {
+      font-size: 8px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .locationContainer {
+    margin-left: 4px;
+    padding: 2px 4px;
+    
+    .deliveryTime {
+      font-size: 7px;
+    }
+  }
+}
+
+.flagIcon {
+  width: 20px;
+  height: 20px;
+  // border-radius: 50%;
+  object-fit: cover;
+  margin-right: 6px;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.deliveryLocation {
+  display: flex;
+  align-items: center;
+  // gap: 4px;
+  // ... existing styles
+}

@@ -1,0 +1,138 @@
+//variables.scss
+@use "sass:map";
+// Max Screen Width
+$max-width: 1300px;
+
+// Colors
+$primary-color-light: #b22f5b;
+// $primary-color-light: #f6cedd;  
+// $primary-color-light: #f6aec8;  
+// $primary-color-light: #f7a9c5;  
+$primary-color: #000000;
+// $primary-color: rgb(229 3 44);  
+// $primary-color: #BE205A; @latest 
+// $primary-color: #ECDCFF;  
+$primary-color-dark : #272121; // Dark blue-gray
+// $primary-color-dark : #f41365fc;   // Dark blue-gray
+// $primary-color-dark : #950EDB;   // Dark blue-gray
+$secondary-color: #3D352F;
+// $secondary-color: #1E84CC;
+$secondary-color-dark: #026bb6;
+
+// Button Color
+$button-red: #E83F25;
+$button-red-hover: #A62C2C;
+$light-red: #f8eaea;
+
+$slider-bg: #f27311;
+$slider-secondary: #f27311;
+
+// Neutral Colors
+$white: #ffffff;
+$black: #000000;
+$light-gray: #f5f5f5;
+$gray: #cccccc;
+$gray-50: #f8f9fa;
+$gray-100: #f1f3f5;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #868e96;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$dark-gray: #555555;
+$active-gray: #e8f5e9;
+$red: #ff0000;
+$red-dark: #800202;
+$red-hover: #ed3737;
+$green: #0a8a13;
+$green-dark: #066d0f;
+$cart-green: #1BA672;
+$green-hover-bg: #e8f5e9;
+$blue: #0000ff;
+$blue-dark: #2757AE;
+$yellow: #ffff00;
+$purple: #800080;
+$orange: #FF4815;
+$orange-dark: #ca3006;
+
+// Title
+$title-color: #111111;
+$sub-title-color: #0f1111;
+// Border
+$border-color: #dee2e6;
+$border-light: #e9ecef;
+$border-dark: #ced4da;
+$border-focus: #b5b5b5;
+$border-very-light: #e0e0e0;
+$border-very-dark: 2px solid #808080;
+$border: 1px solid $border-color;
+
+// Status Colors
+$success-color: #28a745;
+$warning-color: #ffc107;
+$error-color: #dc3545;
+$info-color: #17a2b8;
+
+//Link Colors
+$link: #0000ff;
+$link-hover: #007bff;
+$link-hover-2: #335FD9;
+
+$gold-color: #E6C05B;
+$gold-hover: #F7EEAA;
+
+$brown-color: #2B110B;
+
+// Shadow
+
+$subheader-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+$box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+$box-shadow-light-1: 0 2px 4px rgba(0, 0, 0, 0.1);
+$box-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.3);
+$box-shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.9);
+$card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+$card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+
+// Breakpoints
+$breakpoint-xs: 480px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;
+
+$background-gray: #F3F3F3;
+$background-orange-100: #f6ded8;
+$background-green-light: #C8F9E5;
+$background-green-light-100: #E9FFF5;
+
+$background-linear-gradient: linear-gradient(197.24deg, #f6ded8 16.45%, rgb(251, 241, 255) 39.26%, rgb(234, 243, 243) 59.99%);
+// $background-linear-gradient: linear-gradient(197.24deg, #3e2114ce 16.45%, rgb(251, 241, 255) 39.26%, rgb(234, 243, 243) 59.99%);
+// $background-linear-gradient: linear-gradient(197.24deg, #ef99a3 16.45%, rgb(251, 241, 255) 39.26%, rgb(234, 243, 243) 59.99%);
+
+$background-linear-gradient-2: linear-gradient(180deg, rgba(244, 245, 249, 0.98) 0%, rgba(236, 238, 244, 0.98) 100%);
+
+// Orange scale
+$orange-100: #FFF3E0;   // very light peach
+$orange-200: #FFE0B2;
+$orange-300: #FFCC80;
+$orange-400: #FFB74D;
+$orange-500: #FF9800;
+$orange-600: #FB8C00;
+$orange-700: #F57C00;
+$orange-800: #EF6C00;
+$orange-900: #F05B54;   // ✅ updated per your request
+
+// Red scale
+$red-100: #FFEBEE;   // very light peach (backgrounds, subtle hover states)
+$red-200: #FFCDD2;   // light red (borders, disabled states)
+$red-300: #EF9A9A;   // soft red (secondary accents)
+$red-400: #E57373;   // medium light red (hover on primary actions)
+$red-500: #F44336;   // base red (standard alerts, error text)
+$red-600: #E53935;   // medium dark red (active states)
+$red-700: #D32F2F;   // dark red (primary error buttons)
+$red-800: #C62828;   // deeper red (pressed states)
+$red-900: #f70e01;   // ✅ updated per your request (matches $orange-900 for brand consistency)
