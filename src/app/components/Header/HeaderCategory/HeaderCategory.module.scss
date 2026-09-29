@@ -32,7 +32,7 @@
   align-items: center;
   justify-content: center;
   min-width: 70px;
-  padding: 0.5rem 1rem;
+  padding: 0.35rem 1rem;
   cursor: pointer;
   color: $black;
   font-weight: 500;
@@ -58,7 +58,8 @@
   }
 
   span {
-    font-size: 18px;
+    font-size: 17px;
+    font-weight: bold;
   }
 }
 
