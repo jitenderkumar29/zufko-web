@@ -34,12 +34,12 @@
   min-width: 70px;
   padding: 0.35rem 1rem;
   cursor: pointer;
-  color: $black;
+  color: $white;
   font-weight: 500;
   transition: all 0.2s ease;
-  border: 1px solid $white;
+  border: 1px solid $primary-color;
   border-radius: 50px;
-  background-color: $white;
+  background-color: $secondary-color-dark;
 
   // Ensure FA icons always follow the button color
   svg {
@@ -48,7 +48,7 @@
   }
 
   &:hover {
-    background-color: $secondary-color;
+    background-color: $primary-color;
     color: $white;
   }
 

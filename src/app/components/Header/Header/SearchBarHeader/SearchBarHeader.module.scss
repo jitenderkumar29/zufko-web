@@ -1,3 +1,10 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
+
+/* =========================================================
+   SEARCH BAR HEADER
+   ========================================================= */
+
 .wrapper {
   width: 100%;
   max-width: 100%;
@@ -5,50 +12,229 @@
   box-sizing: border-box;
 }
 
+
+/* =========================================================
+   SEARCH CONTAINER
+   ========================================================= */
+
 .searchContainer {
   position: relative;
+  isolation: isolate;
 
   width: 100%;
-  max-height: 70px;
+  height: 70px;
+  min-height: 0;
 
-  padding: 12px 14px;
+  /*
+   * Border thickness
+   */
+  padding: 5px;
 
   border-radius: 16px;
 
-  background: linear-gradient(
-    135deg,
-    #a9d0ff 0%,
-    #7db6fa 48%,
-    #438cf0 100%
-  );
+  /*
+   * Uniform blue border/background
+   */
+  background: #7db6fa;
 
   box-sizing: border-box;
 
-  transition:
-    box-shadow 0.25s ease,
-    transform 0.2s ease,
-    background 0.25s ease;
+  overflow: hidden;
 
   box-shadow:
     0 4px 10px rgba(32, 91, 170, 0.16);
 
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+
+
+  /* =======================================================
+     MOVING RECTANGLE HIGHLIGHT
+     ======================================================= */
+
+  &::before {
+    content: "";
+
+    position: absolute;
+
+    /*
+     * Size of moving highlight
+     */
+    width: 75px;
+    height: 5px;
+
+    /*
+     * Start at top-left
+     */
+    top: 0;
+    left: 0;
+
+    z-index: 1;
+
+    border-radius: 999px;
+
+    /*
+     * Same blue family.
+     *
+     * No white flash.
+     */
+    background: linear-gradient(
+      90deg,
+      #7db6fa 0%,
+      #a9d0ff 25%,
+      #ffffff 50%,
+      #a9d0ff 75%,
+      #7db6fa 100%
+    );
+
+    /*
+     * Subtle glow
+     */
+    box-shadow:
+      0 0 6px rgba(255, 255, 255, 0.9),
+      0 0 12px rgba(67, 140, 240, 0.55);
+
+    /*
+     * =====================================================
+     * EXACT RECTANGLE PATH
+     *
+     * Top-left
+     *     ↓
+     * Top-right
+     *     ↓
+     * Bottom-right
+     *     ↓
+     * Bottom-left
+     *     ↓
+     * Top-left
+     * =====================================================
+     */
+    offset-path: inset(
+      0
+      0
+      0
+      0
+      round 16px
+    );
+
+    /*
+     * Start at top-left.
+     */
+    offset-distance: 0%;
+
+    /*
+     * Keep highlight orientation horizontal.
+     */
+    offset-rotate: 0deg;
+
+    /*
+     * Continuous clockwise movement.
+     */
+    animation:
+      rectangleBorderTravel 4s linear infinite;
+
+    pointer-events: none;
+  }
+
+
+  /* =======================================================
+     INNER WHITE AREA
+     ======================================================= */
+
+  &::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 5px;
+
+    z-index: 2;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    pointer-events: none;
+  }
+
+
+  /* =======================================================
+     FOCUSED
+     ======================================================= */
+
   &.focused {
     box-shadow:
       0 0 0 2px rgba(255, 255, 255, 0.65),
-      0 7px 18px rgba(32, 91, 170, 0.25);
+      0 7px 18px rgba(32, 91, 170, 0.25),
+      0 0 24px rgba(67, 140, 240, 0.3);
+
+    &::before {
+      animation-duration: 3s;
+    }
   }
+
+
+  /* =======================================================
+     DISABLED
+     ======================================================= */
 
   &.disabled {
     opacity: 0.65;
+
     cursor: not-allowed;
+
+    &::before {
+      animation-play-state: paused;
+    }
   }
 }
 
+
+/* =========================================================
+   RECTANGLE CLOCKWISE ANIMATION
+   =========================================================
+
+   The browser follows the rectangular offset-path.
+
+   0%   = TOP-LEFT
+   25%  = TOP-RIGHT
+   50%  = BOTTOM-RIGHT
+   75%  = BOTTOM-LEFT
+   100% = TOP-LEFT
+
+   ========================================================= */
+
+@keyframes rectangleBorderTravel {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
+
+
+/* =========================================================
+   INNER SEARCH AREA
+   ========================================================= */
+
 .inner {
+  position: relative;
+
+  /*
+   * Above animated border
+   */
+  z-index: 3;
+
   width: 100%;
-  min-height: 56px;
+  height: 100%;
+
+  min-height: 0;
 
   display: flex;
+
   align-items: center;
 
   padding: 0 10px;
@@ -64,10 +250,16 @@
     border-color 0.2s ease;
 }
 
+
+/* =========================================================
+   EVA BRAND
+   ========================================================= */
+
 .brand {
   flex: 0 0 auto;
 
   display: flex;
+
   align-items: center;
 
   gap: 7px;
@@ -75,17 +267,29 @@
   padding-left: 6px;
 }
 
+
+/* =========================================================
+   LOGO WRAPPER
+   ========================================================= */
+
 .logoWrapper {
   width: 34px;
   height: 34px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   overflow: hidden;
+
   flex-shrink: 0;
 }
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
 
 .logo {
   display: block;
@@ -96,9 +300,16 @@
   object-fit: contain;
 }
 
+
+/* =========================================================
+   BRAND TEXT
+   ========================================================= */
+
 .brandText {
   display: flex;
+
   flex-direction: column;
+
   justify-content: center;
 
   line-height: 1;
@@ -106,8 +317,14 @@
   white-space: nowrap;
 }
 
+
+/* =========================================================
+   ASK
+   ========================================================= */
+
 .ask {
   font-size: 8px;
+
   font-weight: 600;
 
   color: #53616f;
@@ -117,8 +334,14 @@
   margin-bottom: 1px;
 }
 
+
+/* =========================================================
+   EVA
+   ========================================================= */
+
 .eva {
   font-size: 15px;
+
   line-height: 15px;
 
   font-weight: 700;
@@ -128,8 +351,14 @@
   letter-spacing: 0.2px;
 }
 
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
 .divider {
   width: 1px;
+
   height: 32px;
 
   flex: 0 0 auto;
@@ -139,6 +368,11 @@
   background: #c8c8c8;
 }
 
+
+/* =========================================================
+   SEARCH ICON
+   ========================================================= */
+
 .searchIcon {
   flex: 0 0 auto;
 
@@ -147,51 +381,84 @@
   color: #89919a;
 }
 
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
 .input {
   min-width: 0;
+
   flex: 1;
 
   width: 100%;
 
   border: 0;
+
   outline: none;
 
   background: transparent;
 
   padding: 0;
 
-  color: #3f4b58;
+  color: $black;
 
   font-family: inherit;
-  font-size: 20px;
-  font-weight: 400;
+
+  font-size: 17px;
+
+  font-weight: 500;
 
   line-height: 1.4;
 
   caret-color: #2d82df;
 
+
+  /* =======================================================
+     PLACEHOLDER
+     ======================================================= */
+
   &::placeholder {
-    color: #66727f;
+    color: $gray-800;
+
     opacity: 1;
   }
+
+
+  /* =======================================================
+     DISABLED
+     ======================================================= */
 
   &:disabled {
     cursor: not-allowed;
   }
+
+
+  /* =======================================================
+     FOCUS
+     ======================================================= */
 
   &:focus {
     outline: none;
   }
 }
 
+
+/* =========================================================
+   CLEAR BUTTON
+   ========================================================= */
+
 .clearButton {
   width: 32px;
+
   height: 32px;
 
   flex: 0 0 32px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   margin-right: 3px;
@@ -199,6 +466,7 @@
   padding: 0;
 
   border: 0;
+
   border-radius: 50%;
 
   background: transparent;
@@ -211,30 +479,43 @@
     color 0.2s ease,
     background 0.2s ease;
 
+
   &:hover {
     color: #4e5965;
+
     background: #f1f3f5;
   }
 
+
   &:focus-visible {
     outline: 2px solid #438cf0;
+
     outline-offset: 2px;
   }
 }
 
+
+/* =========================================================
+   SEND BUTTON
+   ========================================================= */
+
 .sendButton {
   width: 46px;
+
   height: 46px;
 
   flex: 0 0 46px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   padding: 0;
 
   border: 0;
+
   border-radius: 50%;
 
   background: transparent;
@@ -244,15 +525,23 @@
     transform 0.15s ease,
     background 0.2s ease;
 
+
   svg {
     display: block;
   }
 
+
   &:focus-visible {
     outline: 2px solid #438cf0;
+
     outline-offset: 2px;
   }
 }
+
+
+/* =========================================================
+   SEND DISABLED
+   ========================================================= */
 
 .sendDisabled {
   color: #b8b8b8;
@@ -260,20 +549,33 @@
   cursor: default;
 }
 
+
+/* =========================================================
+   SEND ACTIVE
+   ========================================================= */
+
 .sendActive {
   color: #5c6872;
 
   cursor: pointer;
 
+
   &:hover {
     color: #2874c6;
+
     background: #f2f7fd;
   }
+
 
   &:active {
     transform: scale(0.92);
   }
 }
+
+
+/* =========================================================
+   SUGGESTIONS
+   ========================================================= */
 
 .suggestions {
   position: absolute;
@@ -281,7 +583,9 @@
   z-index: 100;
 
   top: calc(100% + 8px);
+
   left: 14px;
+
   right: 14px;
 
   overflow: hidden;
@@ -289,6 +593,7 @@
   padding: 6px;
 
   border: 1px solid #e4e9ef;
+
   border-radius: 12px;
 
   background: #ffffff;
@@ -296,13 +601,20 @@
   box-shadow:
     0 10px 30px rgba(36, 68, 105, 0.18);
 
-  animation: suggestionOpen 0.16s ease-out;
+  animation:
+    suggestionOpen 0.16s ease-out;
 }
+
+
+/* =========================================================
+   SUGGESTION ITEM
+   ========================================================= */
 
 .suggestionItem {
   width: 100%;
 
   display: flex;
+
   align-items: center;
 
   gap: 10px;
@@ -312,6 +624,7 @@
   padding: 9px 11px;
 
   border: 0;
+
   border-radius: 8px;
 
   background: transparent;
@@ -319,6 +632,7 @@
   color: #3e4b58;
 
   font-family: inherit;
+
   font-size: 14px;
 
   text-align: left;
@@ -329,188 +643,320 @@
     background 0.15s ease,
     color 0.15s ease;
 
+
   svg {
     flex: 0 0 auto;
 
     color: #7b8793;
   }
 
+
   &:hover {
     background: #f3f7fb;
   }
 
+
   &:focus-visible {
     outline: 2px solid #438cf0;
+
     outline-offset: -2px;
   }
 }
+
+
+/* =========================================================
+   ACTIVE SUGGESTION
+   ========================================================= */
 
 .suggestionActive {
   background: #edf5ff;
 
   color: #236ab0;
 
+
   svg {
     color: #236ab0;
   }
 }
 
+
+/* =========================================================
+   SUGGESTION OPEN ANIMATION
+   ========================================================= */
+
 @keyframes suggestionOpen {
   from {
     opacity: 0;
+
     transform: translateY(-4px);
   }
 
   to {
     opacity: 1;
+
     transform: translateY(0);
   }
 }
 
-/* =========================================
+
+/* =========================================================
    LARGE DESKTOP
-========================================= */
+   ========================================================= */
 
 @media (min-width: 1440px) {
   .searchContainer {
-    min-height: 82px;
+    height: 55px;
 
-    padding: 13px 15px;
+    min-height: 0;
 
-    border-radius: 17px;
+    padding: 5px;
+
+    border-radius: 12px;
   }
+
+
+  .searchContainer::before {
+    width: 65px;
+
+    height: 5px;
+
+    offset-path: inset(
+      0
+      0
+      0
+      0
+      round 12px
+    );
+  }
+
 
   .inner {
-    min-height: 56px;
+    height: 100%;
+
+    min-height: 0;
+
     padding: 0 12px;
+
+    border-radius: 7px;
   }
+
 
   .brand {
     padding-left: 7px;
   }
 
+
   .logoWrapper {
     width: 35px;
+
     height: 35px;
   }
 
+
   .divider {
     margin-left: 14px;
+
     margin-right: 15px;
   }
+
 
   .input {
     font-size: 20px;
   }
 
+
   .sendButton {
     width: 48px;
+
     height: 48px;
+
     flex-basis: 48px;
   }
 }
 
-/* =========================================
+
+/* =========================================================
    LAPTOP
-========================================= */
+   ========================================================= */
 
 @media (min-width: 1024px) and (max-width: 1439px) {
   .searchContainer {
-    min-height: 78px;
+    height: 55px;
 
-    padding: 11px 13px;
+    min-height: 0;
 
-    border-radius: 15px;
+    padding: 5px;
+
+    border-radius: 12px;
   }
+
+
+  .searchContainer::before {
+    width: 65px;
+
+    height: 5px;
+
+    offset-path: inset(
+      0
+      0
+      0
+      0
+      round 12px
+    );
+  }
+
 
   .inner {
-    min-height: 55px;
+    height: 100%;
+
+    min-height: 0;
+
+    border-radius: 7px;
   }
+
 
   .input {
     font-size: 19px;
   }
 }
 
-/* =========================================
+
+/* =========================================================
    TABLET
-========================================= */
+   ========================================================= */
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .searchContainer {
-    min-height: 72px;
+    height: 55px;
 
-    padding: 10px 12px;
+    min-height: 0;
 
-    border-radius: 14px;
+    padding: 5px;
+
+    border-radius: 12px;
   }
+
+
+  .searchContainer::before {
+    width: 60px;
+
+    height: 5px;
+
+    offset-path: inset(
+      0
+      0
+      0
+      0
+      round 12px
+    );
+  }
+
 
   .inner {
-    min-height: 52px;
+    height: 100%;
+
+    min-height: 0;
 
     padding: 0 9px;
+
+    border-radius: 7px;
   }
+
 
   .brand {
     gap: 6px;
   }
 
+
   .logoWrapper {
     width: 31px;
+
     height: 31px;
   }
+
 
   .ask {
     font-size: 7px;
   }
 
+
   .eva {
     font-size: 14px;
   }
+
 
   .divider {
     height: 29px;
 
     margin-left: 11px;
+
     margin-right: 11px;
   }
+
 
   .input {
     font-size: 17px;
   }
 
+
   .sendButton {
     width: 43px;
+
     height: 43px;
+
     flex-basis: 43px;
+
 
     svg {
       width: 25px;
+
       height: 25px;
     }
   }
 }
 
-/* =========================================
+
+/* =========================================================
    MOBILE
-========================================= */
+   ========================================================= */
 
 @media (max-width: 767px) {
   .searchContainer {
-    min-height: 64px;
+    height: 55px;
 
-    padding: 8px 9px;
+    min-height: 0;
+
+    padding: 5px;
 
     border-radius: 12px;
   }
 
+
+  .searchContainer::before {
+    width: 55px;
+
+    height: 5px;
+
+    offset-path: inset(
+      0
+      0
+      0
+      0
+      round 12px
+    );
+  }
+
+
   .inner {
-    min-height: 48px;
+    height: 100%;
+
+    min-height: 0;
 
     padding: 0 7px;
 
-    border-radius: 9px;
+    border-radius: 7px;
   }
+
 
   .brand {
     gap: 4px;
@@ -518,63 +964,82 @@
     padding-left: 2px;
   }
 
+
   .logoWrapper {
     width: 27px;
+
     height: 27px;
   }
+
 
   .brandText {
     display: none;
   }
 
+
   .divider {
     height: 26px;
 
     margin-left: 8px;
+
     margin-right: 9px;
   }
 
+
   .searchIcon {
     width: 17px;
+
     height: 17px;
 
     margin-right: 6px;
   }
 
+
   .input {
     font-size: 15px;
+
     line-height: 1.3;
+
 
     &::placeholder {
       font-size: 15px;
     }
   }
 
+
   .clearButton {
     width: 28px;
+
     height: 28px;
 
     flex-basis: 28px;
   }
 
+
   .sendButton {
     width: 38px;
+
     height: 38px;
 
     flex-basis: 38px;
 
+
     svg {
       width: 23px;
+
       height: 23px;
     }
   }
 
+
   .suggestions {
     left: 9px;
+
     right: 9px;
 
     top: calc(100% + 6px);
   }
+
 
   .suggestionItem {
     min-height: 40px;
@@ -583,87 +1048,153 @@
   }
 }
 
-/* =========================================
+
+/* =========================================================
    SMALL MOBILE
-========================================= */
+   ========================================================= */
 
 @media (max-width: 390px) {
   .searchContainer {
-    padding: 7px 8px;
+    height: 55px;
+
+    min-height: 0;
+
+    padding: 5px;
+
+    border-radius: 12px;
   }
 
-  .inner {
-    min-height: 46px;
+
+  .searchContainer::before {
+    width: 50px;
+
+    height: 5px;
+
+    offset-path: inset(
+      0
+      0
+      0
+      0
+      round 12px
+    );
   }
+
+
+  .inner {
+    height: 100%;
+
+    min-height: 0;
+  }
+
 
   .logoWrapper {
     width: 25px;
+
     height: 25px;
   }
 
+
   .divider {
     margin-left: 7px;
+
     margin-right: 7px;
   }
 
+
   .input {
     font-size: 14px;
+
 
     &::placeholder {
       font-size: 14px;
     }
   }
 
+
   .clearButton {
     width: 26px;
+
     height: 26px;
 
     flex-basis: 26px;
   }
 
+
   .sendButton {
     width: 35px;
+
     height: 35px;
 
     flex-basis: 35px;
 
+
     svg {
       width: 21px;
+
       height: 21px;
     }
   }
 }
 
-/* =========================================
+
+/* =========================================================
    VERY SMALL DEVICES
-========================================= */
+   ========================================================= */
 
 @media (max-width: 320px) {
+  .searchContainer {
+    height: 55px;
+
+    min-height: 0;
+  }
+
+
+  .searchContainer::before {
+    width: 45px;
+
+    height: 5px;
+
+    offset-path: inset(
+      0
+      0
+      0
+      0
+      round 12px
+    );
+  }
+
+
   .brand {
     display: none;
   }
+
 
   .divider {
     display: none;
   }
 
+
   .input {
     padding-left: 4px;
   }
 
+
   .sendButton {
     width: 34px;
+
     height: 34px;
 
     flex-basis: 34px;
   }
 }
 
-/* =========================================
+
+/* =========================================================
    REDUCED MOTION
-========================================= */
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+  .searchContainer::before,
   .searchContainer,
   .inner,
   .sendButton,
@@ -671,6 +1202,7 @@
   .suggestionItem,
   .suggestions {
     transition: none;
+
     animation: none;
   }
 }

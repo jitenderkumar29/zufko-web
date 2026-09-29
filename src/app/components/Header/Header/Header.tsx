@@ -112,9 +112,13 @@ const Header = () => {
     setShowLocationModal(false);
   };
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Searching for:', searchQuery);
+  // const handleSearch = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log('Searching for:', searchQuery);
+  // };
+
+   const handleSearch = (value: string) => {
+    console.log("Searching:", value);
   };
 
   const placeholders = [
@@ -208,9 +212,7 @@ const Header = () => {
     }
   }, [address.country]);
 
-  //  const handleSearch = (value: string) => {
-  //   console.log("Searching:", value);
-  // };
+  
 
   return (
     <header className={styles.header}>
@@ -257,11 +259,11 @@ const Header = () => {
         </div>
 
         <div className={styles.searchContainer}>
-          {/* <SearchBarHeader
+          <SearchBarHeader
             placeholder="Search for Credit card..."
             onSearch={handleSearch}
-          /> */}
-          <form onSubmit={handleSearch} className={styles.searchForm}>
+          />
+          {/* <form onSubmit={handleSearch} className={styles.searchForm}>
             <div className={styles.inputWrapper}>
               <input
                 type="text"
@@ -281,7 +283,7 @@ const Header = () => {
             <button type="submit" className={styles.searchButton}>
               <FaSearch className={styles.searchIcon} />
             </button>
-          </form>
+          </form> */}
         </div>
 
         <div className={styles.rightSection}>

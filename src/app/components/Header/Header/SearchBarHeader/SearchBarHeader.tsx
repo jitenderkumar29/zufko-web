@@ -18,6 +18,23 @@ export interface SearchSuggestion {
 
 export interface SearchBarHeaderProps {
   placeholder?: string;
+
+  /**
+   * Multiple placeholders for typewriter animation.
+   * If provided, these will rotate automatically.
+   */
+  placeholders?: string[];
+
+  /**
+   * Speed of typing/deleting each character.
+   */
+  placeholderTypingSpeed?: number;
+
+  /**
+   * Time to wait after completing a placeholder.
+   */
+  placeholderPauseDuration?: number;
+
   value?: string;
   defaultValue?: string;
 
@@ -42,10 +59,25 @@ export interface SearchBarHeaderProps {
 }
 
 const DEFAULT_LOGO =
-  "https://hbchat.senseforth.com/HDFC_one_ui/Images/PWS-Revamp/eva-new.svg";
+  "/products/eva-new.svg";
+
+const DEFAULT_PLACEHOLDERS = [
+  "Search for an Instant Ride",
+  "Search for a Premium Ride",
+  "Search for a Corporate Ride",
+  "Search for a Commercial Vehicle",
+  "Search for Tour Packages",
+  "Search for Parcel Delivery",
+  "Search for Packer & Movers",
+];
 
 const SearchBarHeader: React.FC<SearchBarHeaderProps> = ({
-  placeholder = "Search for Credit card...",
+  placeholder = "Search FAQs, products and more",
+  placeholders = DEFAULT_PLACEHOLDERS,
+
+  placeholderTypingSpeed = 65,
+  placeholderPauseDuration = 1800,
+
   value,
   defaultValue = "",
 
@@ -74,15 +106,143 @@ const SearchBarHeader: React.FC<SearchBarHeaderProps> = ({
   const [isFocused, setIsFocused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
 
+  /*
+   * Typewriter placeholder state
+   */
+  const [typedPlaceholder, setTypedPlaceholder] =
+    useState("");
+
+  const [placeholderIndex, setPlaceholderIndex] =
+    useState(0);
+
+  const [isDeletingPlaceholder, setIsDeletingPlaceholder] =
+    useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const searchValue = isControlled ? value : internalValue;
+
+  /*
+   * Use custom placeholders if supplied.
+   * Otherwise use the normal placeholder prop.
+   */
+  const placeholderList =
+    placeholders.length > 0
+      ? placeholders
+      : [placeholder];
+
+  /*
+   * Typewriter animation
+   *
+   * It stops automatically when the user starts typing.
+   */
+  useEffect(() => {
+    if (disabled || searchValue.length > 0) {
+      return;
+    }
+
+    if (!placeholderList.length) {
+      return;
+    }
+
+    const currentText =
+      placeholderList[placeholderIndex] ?? placeholder;
+
+    let timeout: ReturnType<typeof setTimeout>;
+
+    /*
+     * Finished typing current placeholder.
+     * Wait before deleting.
+     */
+    if (
+      !isDeletingPlaceholder &&
+      typedPlaceholder === currentText
+    ) {
+      timeout = setTimeout(() => {
+        setIsDeletingPlaceholder(true);
+      }, placeholderPauseDuration);
+
+      return () => clearTimeout(timeout);
+    }
+
+    /*
+     * Finished deleting current placeholder.
+     * Move to next placeholder.
+     */
+    if (
+      isDeletingPlaceholder &&
+      typedPlaceholder === ""
+    ) {
+      setIsDeletingPlaceholder(false);
+
+      setPlaceholderIndex(
+        (current) =>
+          (current + 1) % placeholderList.length
+      );
+
+      return;
+    }
+
+    /*
+     * Type one character.
+     */
+    if (!isDeletingPlaceholder) {
+      timeout = setTimeout(() => {
+        setTypedPlaceholder(
+          currentText.slice(
+            0,
+            typedPlaceholder.length + 1
+          )
+        );
+      }, placeholderTypingSpeed);
+    }
+
+    /*
+     * Delete one character.
+     */
+    else {
+      timeout = setTimeout(() => {
+        setTypedPlaceholder(
+          currentText.slice(
+            0,
+            Math.max(0, typedPlaceholder.length - 1)
+          )
+        );
+      }, placeholderTypingSpeed / 1.5);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [
+    disabled,
+    searchValue,
+    placeholderIndex,
+    typedPlaceholder,
+    isDeletingPlaceholder,
+    placeholderList,
+    placeholder,
+    placeholderTypingSpeed,
+    placeholderPauseDuration,
+  ]);
+
+  /*
+   * Reset typewriter when input becomes empty.
+   */
+  useEffect(() => {
+    if (searchValue.length === 0) {
+      return;
+    }
+
+    setTypedPlaceholder("");
+    setIsDeletingPlaceholder(false);
+  }, [searchValue]);
 
   const filteredSuggestions =
     searchValue.trim().length > 0
       ? suggestions
           .filter((item) =>
-            item.label.toLowerCase().includes(searchValue.toLowerCase())
+            item.label
+              .toLowerCase()
+              .includes(searchValue.toLowerCase())
           )
           .slice(0, 6)
       : [];
@@ -119,10 +279,13 @@ const SearchBarHeader: React.FC<SearchBarHeaderProps> = ({
   const handleSuggestionSelect = (
     suggestion: SearchSuggestion
   ) => {
-    const selectedValue = suggestion.value ?? suggestion.label;
+    const selectedValue =
+      suggestion.value ?? suggestion.label;
 
     updateValue(selectedValue);
+
     onSuggestionSelect?.(suggestion);
+
     onSearch?.(selectedValue);
 
     setActiveIndex(-1);
@@ -132,7 +295,9 @@ const SearchBarHeader: React.FC<SearchBarHeaderProps> = ({
     });
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    event: KeyboardEvent<HTMLInputElement>
+  ) => {
     if (event.key === "Enter") {
       event.preventDefault();
 
@@ -196,6 +361,18 @@ const SearchBarHeader: React.FC<SearchBarHeaderProps> = ({
   const showSuggestions =
     isFocused && filteredSuggestions.length > 0;
 
+  /*
+   * When user has entered text:
+   * use normal placeholder.
+   *
+   * When empty:
+   * use animated typewriter placeholder.
+   */
+  const currentPlaceholder =
+    searchValue.length > 0
+      ? placeholder
+      : typedPlaceholder;
+
   return (
     <div
       className={`${styles.wrapper} ${className}`}
@@ -249,11 +426,13 @@ const SearchBarHeader: React.FC<SearchBarHeaderProps> = ({
             }
             onFocus={() => setIsFocused(true)}
             onBlur={() => {
-              // Small delay allows suggestion click to work.
-              setTimeout(() => setIsFocused(false), 120);
+              setTimeout(
+                () => setIsFocused(false),
+                120
+              );
             }}
             onKeyDown={handleKeyDown}
-            placeholder={placeholder}
+            placeholder={currentPlaceholder}
             disabled={disabled}
             maxLength={maxLength}
             autoComplete="off"
@@ -274,16 +453,18 @@ const SearchBarHeader: React.FC<SearchBarHeaderProps> = ({
           />
 
           {/* CLEAR */}
-          {showClearButton && hasValue && !disabled && (
-            <button
-              type="button"
-              className={styles.clearButton}
-              onClick={handleClear}
-              aria-label="Clear search"
-            >
-              <X size={17} />
-            </button>
-          )}
+          {showClearButton &&
+            hasValue &&
+            !disabled && (
+              <button
+                type="button"
+                className={styles.clearButton}
+                onClick={handleClear}
+                aria-label="Clear search"
+              >
+                <X size={17} />
+              </button>
+            )}
 
           {/* SEND */}
           <button
@@ -296,7 +477,9 @@ const SearchBarHeader: React.FC<SearchBarHeaderProps> = ({
             onClick={handleSearch}
             disabled={!hasValue || disabled}
             aria-label="Send"
-            aria-disabled={!hasValue || disabled}
+            aria-disabled={
+              !hasValue || disabled
+            }
           >
             <SendHorizontal
               size={28}

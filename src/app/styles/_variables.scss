@@ -4,7 +4,7 @@
 $max-width: 1300px;
 
 // Colors
-$primary-color-light: #b22f5b;
+$primary-color-light: rgb(81, 71, 74);
 // $primary-color-light: #f6cedd;  
 // $primary-color-light: #f6aec8;  
 // $primary-color-light: #f7a9c5;  
@@ -12,12 +12,13 @@ $primary-color: #000000;
 // $primary-color: rgb(229 3 44);  
 // $primary-color: #BE205A; @latest 
 // $primary-color: #ECDCFF;  
-$primary-color-dark : #272121; // Dark blue-gray
+$primary-color-dark : #010101; // Dark blue-gray
 // $primary-color-dark : #f41365fc;   // Dark blue-gray
 // $primary-color-dark : #950EDB;   // Dark blue-gray
-$secondary-color: #3D352F;
+$secondary-color: #50463f;
+// $secondary-color: #3D352F;
 // $secondary-color: #1E84CC;
-$secondary-color-dark: #026bb6;
+$secondary-color-dark: #2d2928;
 
 // Button Color
 $button-red: #E83F25;
@@ -136,3 +137,23 @@ $red-600: #E53935;   // medium dark red (active states)
 $red-700: #D32F2F;   // dark red (primary error buttons)
 $red-800: #C62828;   // deeper red (pressed states)
 $red-900: #f70e01;   // ✅ updated per your request (matches $orange-900 for brand consistency)
+
+$yellow-100: #FFFDE7;
+$yellow-200: #FFF9C4;
+$yellow-300: #FFF59D;
+$yellow-400: #FFF176;
+$yellow-500: #FFEB3B;
+$yellow-600: #FDD835;
+$yellow-700: #FBC02D;
+$yellow-800: #F9A825;
+$yellow-900: #F57F17;
+
+$golden-100: #FFF8E1;
+$golden-200: #FFECB3;
+$golden-300: #FFE082;
+$golden-400: #FFD54F;
+$golden-500: #FFC107;
+$golden-600: #FFB300;
+$golden-700: #FFA000;
+$golden-800: #FF8F00;
+$golden-900: #FF6F00;
