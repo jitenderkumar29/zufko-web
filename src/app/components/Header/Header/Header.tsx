@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import AddressSelection, { AddressData } from '../../Address/AddressSelection/AddressSelection';
-import SearchBarHeader from './SearchBarHeader/SearchBarHeader';
+import SearchBarHeader from '../../SearchBar/SearchBarHeader/SearchBarHeader';
 
 // Country flag mapping (using FNP's CDN)
 const COUNTRY_FLAGS: Record<string, string> = {

@@ -1,0 +1,1363 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+/* =========================================================
+   SEARCH CHAT BOAT
+   ========================================================= */
+
+.wrapper {
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MAIN CHAT PANEL
+   ========================================================= */
+
+.chatSearchPanel {
+    width: 100%;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    overflow: visible;
+
+    isolation: isolate;
+
+    box-shadow:
+        0 15px 45px rgba(18, 44, 72, 0.12);
+
+    transition:
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+}
+
+
+/* =========================================================
+   FOCUS STATE
+   ========================================================= */
+
+.chatSearchPanel.focused {
+    box-shadow:
+        0 18px 55px rgba(18, 44, 72, 0.18);
+}
+
+
+/* =========================================================
+   DISABLED STATE
+   ========================================================= */
+
+.chatSearchPanel.disabled {
+    opacity: 0.65;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   SEARCH BOX
+   =========================================================
+   
+   BLUE BORDER + MOVING HIGHLIGHT
+   ========================================================= */
+
+.searchBox {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    /*
+   * Blue border thickness
+   */
+    padding: 10px;
+
+    /*
+   * Blue border
+   */
+    background: $search-border-color;
+    // background: #7db6fa;
+
+    /*
+   * Rounded top corners
+   */
+    border-radius: 18px 18px 0 0;
+
+    position: relative;
+
+    /*
+   * Keep moving highlight inside
+   * this blue border.
+   */
+    overflow: hidden;
+
+    isolation: isolate;
+
+
+    /* =======================================================
+     MOVING RECTANGLE HIGHLIGHT
+     ======================================================= */
+
+    &::before {
+        content: "";
+
+        position: absolute;
+
+        /*
+     * Highlight size
+     */
+        width: 82px;
+        height: 4px;
+
+        /*
+     * Start at top-left
+     */
+        top: 0;
+        left: 0;
+
+        z-index: 5;
+
+        border-radius: 999px;
+
+        /*
+     * Blue/white moving glow
+     */
+        background: $search-linear-gradient;
+
+        /*
+     * Highlight glow
+     */
+     box-shadow:
+    0 0 6px rgba(255, 255, 255, 0.9),
+    0 0 12px rgba(222, 210, 175, 0.65);
+        // box-shadow:
+        //     0 0 5px rgba(255, 255, 255, 0.95),
+        //     0 0 10px rgba(67, 140, 240, 0.65),
+        //     0 0 16px rgba(67, 140, 240, 0.3);
+
+        /*
+     * =====================================================
+     * CLOCKWISE RECTANGLE PATH
+     *
+     * ① TOP-LEFT
+     *       ↓
+     * ② TOP-RIGHT
+     *       ↓
+     * ③ BOTTOM-RIGHT
+     *       ↓
+     * ④ BOTTOM-LEFT
+     *       ↓
+     * ① TOP-LEFT
+     * =====================================================
+     */
+        offset-path: inset(3px 3px 3px 3px round 15px);
+
+        /*
+     * Start at top-left
+     */
+        offset-distance: 0%;
+
+        /*
+     * Keep highlight horizontal
+     */
+        offset-rotate: auto;
+        offset-anchor: 50% 50%;
+
+        /*
+     * Continuous clockwise movement
+     */
+        animation:
+            innerRectangleBorderTravel 4s linear infinite;
+
+        pointer-events: none;
+    }
+}
+
+
+/* =========================================================
+   SEARCH INNER
+   ========================================================= */
+
+.searchInner {
+    width: 100%;
+
+    min-height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    // padding: 10px 16px;
+
+    /*
+   * White inner search area
+   */
+    background: #ffffff;
+
+    border-radius: 13px;
+
+    position: relative;
+
+    z-index: 4;
+}
+
+
+/* =========================================================
+   MOVING RECTANGLE ANIMATION
+   ========================================================= */
+
+@keyframes innerRectangleBorderTravel {
+
+    /*
+   * ① TOP-LEFT
+   */
+    0% {
+        offset-distance: 0%;
+    }
+
+    /*
+   * ② TOP-RIGHT
+   */
+    25% {
+        offset-distance: 25%;
+    }
+
+    /*
+   * ③ BOTTOM-RIGHT
+   */
+    50% {
+        offset-distance: 50%;
+    }
+
+    /*
+   * ④ BOTTOM-LEFT
+   */
+    75% {
+        offset-distance: 75%;
+    }
+
+    /*
+   * ① TOP-LEFT
+   */
+    100% {
+        offset-distance: 100%;
+    }
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+    flex: 0 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding-left: 5px;
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logoWrapper {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+}
+
+
+.logo {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   BRAND TEXT
+   ========================================================= */
+
+.brandText {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ASK
+   ========================================================= */
+
+.ask {
+    font-size: 10px;
+
+    font-weight: 600;
+
+    line-height: 11px;
+
+    color: #53616f;
+
+    letter-spacing: 0.25px;
+}
+
+
+/* =========================================================
+   EVA
+   ========================================================= */
+
+.eva {
+    font-size: 18px;
+
+    font-weight: 700;
+
+    line-height: 18px;
+
+    color: #0871b9;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.divider {
+    width: 1px;
+
+    height: 38px;
+
+    flex: 0 0 1px;
+
+    margin: 0 15px;
+
+    background: #c8c8c8;
+}
+
+
+/* =========================================================
+   SEARCH ICON
+   ========================================================= */
+
+.searchIcon {
+    flex: 0 0 auto;
+
+    margin-right: 9px;
+
+    color: #89919a;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.input {
+    min-width: 0;
+
+    flex: 1;
+
+    width: 100%;
+
+    border: 0;
+
+    outline: none;
+
+    background: transparent;
+
+    padding: 0;
+
+    color: #222222;
+
+    font-family: inherit;
+
+    font-size: 20px;
+
+    font-weight: 500;
+
+    line-height: 1.4;
+
+    cursor: text;
+}
+
+
+/* =========================================================
+   INPUT PLACEHOLDER
+   ========================================================= */
+
+.input::placeholder {
+    color: #737373;
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   DISABLED INPUT
+   ========================================================= */
+
+.input:disabled {
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   CLEAR BUTTON
+   ========================================================= */
+
+.clearButton {
+    width: 36px;
+    height: 36px;
+
+    flex: 0 0 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 4px;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #929ba5;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+
+/* =========================================================
+   CLEAR HOVER
+   ========================================================= */
+
+.clearButton:hover {
+    color: #4e5965;
+
+    background: #f1f3f5;
+}
+
+
+/* =========================================================
+   CLEAR ACTIVE
+   ========================================================= */
+
+.clearButton:active {
+    transform: scale(0.9);
+}
+
+
+/* =========================================================
+   SEND BUTTON
+   ========================================================= */
+
+.sendButton {
+    width: 46px;
+    height: 46px;
+
+    flex: 0 0 46px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+
+/* =========================================================
+   SEND ACTIVE
+   ========================================================= */
+
+.sendButton:active {
+    transform: scale(0.92);
+}
+
+
+/* =========================================================
+   SEND DISABLED
+   ========================================================= */
+
+.sendDisabled {
+    color: #b8b8b8;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   SEND ENABLED
+   ========================================================= */
+
+.sendActive {
+    color: #2874c6;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   SEND HOVER
+   ========================================================= */
+
+.sendActive:hover {
+    background: #f2f7fd;
+
+    color: #1767b0;
+}
+
+
+/* =========================================================
+   CONTENT SECTION
+   =========================================================
+   
+   SAME BLUE BORDER AS SEARCH BOX
+   
+   IMPORTANT:
+   - Same blue color
+   - Same border thickness
+   - Rounded on ALL FOUR corners
+   - NO moving highlight
+   ========================================================= */
+
+.searchContent {
+    width: 100%;
+    box-sizing: border-box;
+
+    border-style: solid;
+    border-color: $search-border-color;
+    border-width: 0 10px 10px 10px;
+    /* top right bottom left */
+    //   border: 6px solid #7db6fa;
+    border-radius: 18px;
+
+    background: #ffffff;
+    padding: 24px 26px 28px;
+
+    position: relative;
+    z-index: 2;
+
+    /* Blue fills the outer rounded corners */
+    box-shadow: 0 0 0 8px $search-border-color;
+    z-index: -1;
+
+}
+
+
+
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.section {
+    width: 100%;
+
+    background: #ffffff;
+
+    margin: 0 0 28px;
+
+    border-radius: 18px;
+}
+
+
+/* =========================================================
+   LAST SECTION
+   ========================================================= */
+
+.section:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.sectionHeader {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.sectionHeader h3 {
+    margin: 0;
+
+    color: #263746;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+   TRENDING ICON
+   ========================================================= */
+
+.trendingIcon {
+    width: 25px;
+    height: 25px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #2874c6;
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    border-radius: 50%;
+
+    background: #edf5ff;
+}
+
+
+/* =========================================================
+   TRENDING LIST
+   ========================================================= */
+
+.trendingList {
+    width: 100%;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TRENDING CHIP
+   ========================================================= */
+
+.trendingChip {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+
+    padding: 8px 14px;
+
+    border: 1px solid #d8e3ee;
+
+    border-radius: 20px;
+
+    background: #edf5fd;
+
+    color: #1e354b;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    line-height: 1.25;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* =========================================================
+   TRENDING HOVER
+   ========================================================= */
+
+.trendingChip:hover {
+    background: #dfefff;
+
+    border-color: #9fc5ed;
+
+    color: #1767b0;
+
+    box-shadow:
+        0 3px 10px rgba(40, 116, 198, 0.12);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TRENDING ACTIVE
+   ========================================================= */
+
+.trendingChip:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   RECENT SECTION
+   ========================================================= */
+
+.recentSection {
+    padding-top: 4px;
+}
+
+
+/* =========================================================
+   RECENT ICON
+   ========================================================= */
+
+.recentIcon {
+    color: #71808e;
+}
+
+
+/* =========================================================
+   RECENT LIST
+   ========================================================= */
+
+.recentList {
+    width: 100%;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+}
+
+
+/* =========================================================
+   RECENT CHIP
+   ========================================================= */
+
+.recentChip {
+    min-height: 40px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    border: 1px solid #e0e7ee;
+
+    border-radius: 20px;
+
+    background: #f5f6f8;
+
+    overflow: hidden;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* =========================================================
+   RECENT CHIP HOVER
+   ========================================================= */
+
+.recentChip:hover {
+    border-color: #bfd4e8;
+
+    box-shadow:
+        0 3px 10px rgba(18, 44, 72, 0.08);
+}
+
+
+/* =========================================================
+   RECENT MAIN BUTTON
+   ========================================================= */
+
+.recentMain {
+    min-height: 40px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 10px 8px 13px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #263746;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* =========================================================
+   RECENT MAIN HOVER
+   ========================================================= */
+
+.recentMain:hover {
+    color: #1767b0;
+
+    background: #edf5fd;
+}
+
+
+/* =========================================================
+   REMOVE RECENT
+   ========================================================= */
+
+.removeRecent {
+    width: 30px;
+    height: 30px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 5px;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: #ef2e32;
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
+}
+
+
+/* =========================================================
+   REMOVE RECENT HOVER
+   ========================================================= */
+
+.removeRecent:hover {
+    background: #d92025;
+
+    color: #ffffff;
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   SUGGESTIONS
+   ========================================================= */
+
+.suggestions {
+    position: absolute;
+
+    left: 6px;
+    right: 6px;
+
+    top: calc(100% - 1px);
+
+    z-index: 1000;
+
+    max-height: 320px;
+
+    overflow-y: auto;
+
+    padding: 7px;
+
+    border: 1px solid #dce5ed;
+
+    border-top: 0;
+
+    border-radius: 0 0 14px 14px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 14px 30px rgba(18, 44, 72, 0.16);
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SUGGESTION ITEM
+   ========================================================= */
+
+.suggestionItem {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    min-height: 44px;
+
+    padding: 10px 13px;
+
+    border: 0;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: #3e4d5b;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+
+/* =========================================================
+   SUGGESTION ICON
+   ========================================================= */
+
+.suggestionItem svg {
+    flex: 0 0 auto;
+
+    color: #8a98a5;
+}
+
+
+/* =========================================================
+   SUGGESTION HOVER
+   ========================================================= */
+
+.suggestionItem:hover {
+    background: #f2f7fd;
+
+    color: #1767b0;
+}
+
+
+/* =========================================================
+   SUGGESTION ICON HOVER
+   ========================================================= */
+
+.suggestionItem:hover svg {
+    color: #2874c6;
+}
+
+
+/* =========================================================
+   ACTIVE SUGGESTION
+   ========================================================= */
+
+.suggestionActive {
+    background: #edf5ff;
+
+    color: #1767b0;
+}
+
+
+/* =========================================================
+   ACTIVE SUGGESTION ICON
+   ========================================================= */
+
+.suggestionActive svg {
+    color: #2874c6;
+}
+
+
+/* =========================================================
+   SUGGESTION SCROLLBAR
+   ========================================================= */
+
+.suggestions::-webkit-scrollbar {
+    width: 6px;
+}
+
+.suggestions::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.suggestions::-webkit-scrollbar-thumb {
+    background: #c9d5e0;
+
+    border-radius: 10px;
+}
+
+.suggestions::-webkit-scrollbar-thumb:hover {
+    background: #aebdca;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1023px) {
+    .searchInner {
+        min-height: 66px;
+
+        padding: 9px 13px;
+    }
+
+    .logoWrapper {
+        width: 38px;
+        height: 38px;
+
+        flex-basis: 38px;
+    }
+
+    .eva {
+        font-size: 17px;
+
+        line-height: 17px;
+    }
+
+    .divider {
+        height: 34px;
+
+        margin: 0 11px;
+    }
+
+    .input {
+        font-size: 18px;
+    }
+
+    .searchContent {
+        padding: 20px;
+
+        /*
+     * Keep the same rounded corners
+     * on tablet.
+     */
+        border-radius: 18px;
+    }
+
+    .searchBox::before {
+        width: 70px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+    .chatSearchPanel {
+        border-radius: 14px;
+    }
+
+    .searchBox {
+        padding: 5px;
+
+        border-radius: 14px 14px 0 0;
+    }
+
+    .searchBox::before {
+        width: 60px;
+
+        height: 3px;
+
+        border-radius: 999px;
+
+        offset-path: inset(2.5px 2.5px 2.5px 2.5px round 11.5px);
+    }
+
+    .searchInner {
+        min-height: 58px;
+
+        padding: 7px 9px;
+
+        border-radius: 10px;
+    }
+
+    .brand {
+        gap: 3px;
+
+        padding-left: 1px;
+    }
+
+    .logoWrapper {
+        width: 31px;
+        height: 31px;
+
+        flex-basis: 31px;
+    }
+
+    .brandText {
+        display: none;
+    }
+
+    .divider {
+        height: 28px;
+
+        margin: 0 8px;
+    }
+
+    .input {
+        font-size: 15px;
+
+        line-height: 1.3;
+    }
+
+    .clearButton {
+        width: 30px;
+        height: 30px;
+
+        flex-basis: 30px;
+    }
+
+    .sendButton {
+        width: 38px;
+        height: 38px;
+
+        flex-basis: 38px;
+    }
+
+    .searchContent {
+        padding: 18px 14px;
+
+        /*
+     * Same border thickness as
+     * mobile search box.
+     */
+        border-width: 5px;
+
+        /*
+     * Rounded on ALL four corners.
+     */
+        border-radius: 14px;
+    }
+
+    .sectionHeader {
+        margin-bottom: 11px;
+    }
+
+    .sectionHeader h3 {
+        font-size: 16px;
+    }
+
+    .trendingList,
+    .recentList {
+        gap: 7px;
+    }
+
+    .trendingChip {
+        min-height: 35px;
+
+        padding: 7px 11px;
+
+        font-size: 13px;
+    }
+
+    .recentMain {
+        font-size: 13px;
+    }
+
+    .suggestions {
+        left: 5px;
+        right: 5px;
+
+        max-height: 260px;
+    }
+
+    .suggestionItem {
+        min-height: 42px;
+
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 390px) {
+    .searchInner {
+        min-height: 54px;
+
+        padding: 6px 7px;
+    }
+
+    .logoWrapper {
+        width: 28px;
+        height: 28px;
+
+        flex-basis: 28px;
+    }
+
+    .divider {
+        height: 26px;
+
+        margin: 0 6px;
+    }
+
+    .input {
+        font-size: 14px;
+    }
+
+    .sendButton {
+        width: 35px;
+        height: 35px;
+
+        flex-basis: 35px;
+    }
+
+    .searchContent {
+        padding: 15px 11px;
+
+        /*
+     * Same border thickness as
+     * small-mobile search box.
+     */
+        border-width: 4px;
+
+        /*
+     * Rounded on ALL four corners.
+     */
+        border-radius: 12px;
+    }
+
+    .trendingChip {
+        font-size: 12px;
+
+        padding: 6px 9px;
+    }
+
+    .searchBox {
+        padding: 4px;
+
+        border-radius: 12px 12px 0 0;
+    }
+
+    .searchBox::before {
+        width: 50px;
+
+        height: 3px;
+
+        offset-path: inset(2px 2px 2px 2px round 10px);
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .searchBox::before {
+        animation: none;
+
+        offset-distance: 0%;
+    }
+
+    .chatSearchPanel,
+    .clearButton,
+    .sendButton,
+    .trendingChip,
+    .recentChip,
+    .recentMain,
+    .removeRecent,
+    .suggestionItem {
+        transition: none;
+    }
+}

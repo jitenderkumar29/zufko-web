@@ -70,6 +70,8 @@ $border-focus: #b5b5b5;
 $border-very-light: #e0e0e0;
 $border-very-dark: 2px solid #808080;
 $border: 1px solid $border-color;
+$search-border-color: #ded2af;
+$search-border-color: #ded2af;
 
 // Status Colors
 $success-color: #28a745;
@@ -84,6 +86,7 @@ $link-hover-2: #335FD9;
 
 $gold-color: #E6C05B;
 $gold-hover: #F7EEAA;
+
 
 $brown-color: #2B110B;
 
@@ -115,9 +118,10 @@ $background-linear-gradient: linear-gradient(197.24deg, #f6ded8 16.45%, rgb(251,
 // $background-linear-gradient: linear-gradient(197.24deg, #ef99a3 16.45%, rgb(251, 241, 255) 39.26%, rgb(234, 243, 243) 59.99%);
 
 $background-linear-gradient-2: linear-gradient(180deg, rgba(244, 245, 249, 0.98) 0%, rgba(236, 238, 244, 0.98) 100%);
+$search-linear-gradient: linear-gradient(90deg,#ded2af 0%,#eee5c9 25%,#ffffff 50%,#eee5c9 75%,#ded2af 100%);
 
 // Orange scale
-$orange-100: #FFF3E0;   // very light peach
+$orange-100: #FFF3E0; // very light peach
 $orange-200: #FFE0B2;
 $orange-300: #FFCC80;
 $orange-400: #FFB74D;
@@ -125,18 +129,18 @@ $orange-500: #FF9800;
 $orange-600: #FB8C00;
 $orange-700: #F57C00;
 $orange-800: #EF6C00;
-$orange-900: #F05B54;   // ✅ updated per your request
+$orange-900: #F05B54; // ✅ updated per your request
 
 // Red scale
-$red-100: #FFEBEE;   // very light peach (backgrounds, subtle hover states)
-$red-200: #FFCDD2;   // light red (borders, disabled states)
-$red-300: #EF9A9A;   // soft red (secondary accents)
-$red-400: #E57373;   // medium light red (hover on primary actions)
-$red-500: #F44336;   // base red (standard alerts, error text)
-$red-600: #E53935;   // medium dark red (active states)
-$red-700: #D32F2F;   // dark red (primary error buttons)
-$red-800: #C62828;   // deeper red (pressed states)
-$red-900: #f70e01;   // ✅ updated per your request (matches $orange-900 for brand consistency)
+$red-100: #FFEBEE; // very light peach (backgrounds, subtle hover states)
+$red-200: #FFCDD2; // light red (borders, disabled states)
+$red-300: #EF9A9A; // soft red (secondary accents)
+$red-400: #E57373; // medium light red (hover on primary actions)
+$red-500: #F44336; // base red (standard alerts, error text)
+$red-600: #E53935; // medium dark red (active states)
+$red-700: #D32F2F; // dark red (primary error buttons)
+$red-800: #C62828; // deeper red (pressed states)
+$red-900: #f70e01; // ✅ updated per your request (matches $orange-900 for brand consistency)
 
 $yellow-100: #FFFDE7;
 $yellow-200: #FFF9C4;
@@ -157,3 +161,13 @@ $golden-600: #FFB300;
 $golden-700: #FFA000;
 $golden-800: #FF8F00;
 $golden-900: #FF6F00;
+
+$gold-100: #faf7ed;
+$gold-200: #f3eedc;
+$gold-300: #ebe3c9;
+$gold-400: #e5d9bb;
+$gold-500: #ded2af;
+$gold-600: #cdbf96;
+$gold-700: #b9a875;
+$gold-800: #9f8d5b;
+$gold-900: #806f43;
